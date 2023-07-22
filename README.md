@@ -8,4 +8,7 @@
 <h1 align=center>SimpleModules - Easy to use modules by <a href="https://t.me/PLNT_YT">Purpl3</a></h1>
 
 ## Available modules
-* **[SimpleAdmin](https://github.com/purpl3-yt/simplemodules/blob/main/SimpleAdmin.py)** 
+
+* **[SimpleAdmin](https://github.com/purpl3-yt/simplemodules/blob/main/SimpleAdmin.py)**
+* **[SimpleLoader](https://github.com/purpl3-yt/simplemodules/blob/main/SimpleLoader.py)**
+* ***[SimpleFramework](https://github.com/purpl3-yt/simplemodules/blob/main/SimpleFramework.py) (not module)***
