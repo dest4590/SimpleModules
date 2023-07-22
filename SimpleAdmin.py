@@ -1,25 +1,15 @@
 # SA Module, by Purpl3 (https://t.me/PLNT_YT)
 from telebot import types, TeleBot
 
-bold = lambda text: '<b>' + text + '</b>'
+# import SimpleFramework
+try: 
+    from SimpleFramework import *
+except ImportError:
+    print('SimpleFramework not found, SimpleAdmin may not work.')
 
-mono = lambda text: '<code>' + text + '</code>'
-
-# Получить аргументы из сообщения
-def getArgs(message: types.Message):
-    return message.text.split(' ')[1:]
-
-# Проверить аргументы
-def checkArgs(message: types.Message, index: int):
-    try:
-        getArgs(message)[index]
-        return True
-    except IndexError:
-        return False
-    
 cmds = []
 
-class Command:
+class ACommand:
     def __init__(self, name: str, desc: str, params: list, access: str):
         self.name = name
         self.desc = desc
@@ -32,7 +22,7 @@ class Command:
         return self.__dict__
 
 def setup(bot: TeleBot):
-    print('SimpleAdmin initialized. Enjoy!')
+    print('SimpleAdmin initialized. Enjoy!') # омагад
 
     async def raiseError(message: types.Message, text: str):
         await bot.reply_to(message, '🚫 ' + bold(text))
@@ -43,7 +33,7 @@ def setup(bot: TeleBot):
             return True
         else: False
 
-    Command('ahelp', 'Помощь по SimpleAdmin', ['command'], 'user')
+    ACommand('ahelp', 'Навигация по SimpleAdmin', ['command'], 'user')
     @bot.message_handler(commands=['ahelp'])
     async def ahelp(message: types.Message):
         if not checkArgs(message, 0):
@@ -83,7 +73,7 @@ def setup(bot: TeleBot):
             await raiseError(message, 'Команда не найдена!')
 
     
-    Command('aban', 'Забанить пользователя', ['user'], 'admin')
+    ACommand('aban', 'Забанить пользователя', ['user'], 'admin')
     @bot.message_handler(commands=['aban'])
     async def ban(message: types.Message):
         if not await checkAdmin(message):
@@ -105,7 +95,7 @@ def setup(bot: TeleBot):
         else:
             await raiseError(message, 'Укажите айди пользователя!')
     
-    Command('aunban', 'Разбанить пользователя', ['user'], 'admin')
+    ACommand('aunban', 'Разбанить пользователя', ['user'], 'admin')
     @bot.message_handler(commands=['aunban'])
     async def unban(message: types.Message):
         if not await checkAdmin(message):
@@ -122,7 +112,7 @@ def setup(bot: TeleBot):
         else:
             await raiseError(message, 'Укажите айди пользователя!')
 
-    Command('ainfo', 'Информация об чате', [], 'user')
+    ACommand('ainfo', 'Информация об чате', [], 'user')
     @bot.message_handler(commands=['ainfo'])
     async def ainfo(message: types.Message):
         if message.chat.title != None: # чекать если есть инфа об чате
@@ -130,4 +120,4 @@ def setup(bot: TeleBot):
 
             await bot.reply_to(message, bold(f'ℹ️ Информация об чате: {message.chat.title}\n') + 
 f'''{bold('ℹ️ Айди: ')} {mono(str(message.chat.id))}
-{bold('👥 Участники: ' + str(membersCount))}''') # это форматированние просто имба
+{bold('👥 Участники: ' + str(membersCount))}''') # это форматирование просто имба
