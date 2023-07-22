@@ -11,7 +11,7 @@ mono = lambda text: '<code>' + text + '</code>'
 def getArgs(message: types.Message):
     return message.text.split(' ')[1:]
 
-# Проверить аргументы
+# Проверить аргументы, ли они вообще есть
 def checkArgs(message: types.Message, index: int):
     try:
         getArgs(message)[index]
