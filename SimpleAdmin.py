@@ -5,11 +5,11 @@ from telebot import types, TeleBot
 try: 
     from SimpleFramework import *
 except ImportError:
-    print('SimpleFramework not found, SimpleAdmin may not work.')
+    print('SimpleFramework not found, SimpleAdmin may not work.') # установи SimpleFramework божжж
 
 cmds = []
 
-class ACommand:
+class ACommand: # класс для команд, по типу ahelp, aban, и т.д
     def __init__(self, name: str, desc: str, params: list, access: str):
         self.name = name
         self.desc = desc
@@ -25,13 +25,14 @@ def setup(bot: TeleBot):
     print('SimpleAdmin initialized. Enjoy!') # омагад
 
     async def raiseError(message: types.Message, text: str):
-        await bot.reply_to(message, '🚫 ' + bold(text))
+        await bot.reply_to(message, '🚫 ' + bold(text)) # выдавать ошибку
 
     async def checkAdmin(message: types.Message):
         user = await bot.get_chat_member(message.chat.id, message.from_user.id)
         if user.status == 'administrator' or user.status == 'creator':
-            return True
-        else: False
+            return True # бро реально купил админку за 100грн
+        
+        else: False # ретарнать фалс если пользователь не админ
 
     ACommand('ahelp', 'Навигация по SimpleAdmin', ['command'], 'user')
     @bot.message_handler(commands=['ahelp'])
@@ -40,10 +41,11 @@ def setup(bot: TeleBot):
             text = f'''{bold('🛠 Команды SimpleAdmin:')}'''
 
             for cmd in cmds:
-                text += bold(f'''\n/{cmd.get()['name']} - {cmd.get()['desc']}''')
+                text += bold(f'''\n/{cmd.get()['name']} - {cmd.get()['desc']}''') # /ahelp - Навигация по SimpleAdmin
 
             await bot.reply_to(message, text)
         else:
+            # уфф, что за говнокод такой.. бархатный..
             for cmd in cmds:
                 if cmd.get()['name'] == getArgs(message)[0]:
                     cmdData = cmd.get()
@@ -66,17 +68,17 @@ def setup(bot: TeleBot):
                     
                     except IndexError: pass # пассать если не включен дебаг
 
-                    await bot.reply_to(message, text)
+                    await bot.reply_to(message, text) # отсылаем help текст
                     
                     return # возращаем чтобы код дальше не шёл
                 
-            await raiseError(message, 'Команда не найдена!')
+            await raiseError(message, 'Команда не найдена!') # если команда /ahelp не нашла информацию про команду
 
     
     ACommand('aban', 'Забанить пользователя', ['user'], 'admin')
     @bot.message_handler(commands=['aban'])
     async def ban(message: types.Message):
-        if not await checkAdmin(message):
+        if not await checkAdmin(message): # лошара, проси админку у овнера
             await raiseError(message, 'У вас нет прав для выполнения этой команды!')
             return
         
@@ -85,20 +87,19 @@ def setup(bot: TeleBot):
             await raiseError(message, 'Укажите пользователя!')
 
         if args[0].isdigit():
-            if int(args[0]) == message.from_user.id: # я себя захуя..
+            if int(args[0]) == message.from_user.id: # бро, я себя захуя..
                 await bot.send_photo(message.chat.id, 'https://i.imgur.com/DWScpZM.jpg', reply_to_message_id=message.id)
                 return
                 
             await bot.unban_chat_member(message.chat.id, args[0])
             await bot.reply_to(message, bold('✅ Пользователь заблокирован!'))
-
         else:
             await raiseError(message, 'Укажите айди пользователя!')
     
     ACommand('aunban', 'Разбанить пользователя', ['user'], 'admin')
     @bot.message_handler(commands=['aunban'])
     async def unban(message: types.Message):
-        if not await checkAdmin(message):
+        if not await checkAdmin(message): # мухахахаха, проси админку за 100грн
             await raiseError(message, 'У вас нет прав для выполнения этой команды!')
             return
         
@@ -107,7 +108,7 @@ def setup(bot: TeleBot):
             await raiseError(message, 'Укажите пользователя!')
         
         if args[0].isdigit():
-            await bot.unban_chat_member(message.chat.id, args[0])
+            await bot.unban_chat_member(message.chat.id, args[0]) # разбан
             await bot.reply_to(message, bold('✅ Пользователь разблокирован!'))
         else:
             await raiseError(message, 'Укажите айди пользователя!')
@@ -115,9 +116,12 @@ def setup(bot: TeleBot):
     ACommand('ainfo', 'Информация об чате', [], 'user')
     @bot.message_handler(commands=['ainfo'])
     async def ainfo(message: types.Message):
-        if message.chat.title != None: # чекать если есть инфа об чате
-            membersCount = await bot.get_chat_member_count(message.chat.id)
+        if message.chat.title != None: # чекать если команда выполнена в чате
+            membersCount = await bot.get_chat_member_count(message.chat.id) # получить количество пользователей
 
             await bot.reply_to(message, bold(f'ℹ️ Информация об чате: {message.chat.title}\n') + 
 f'''{bold('ℹ️ Айди: ')} {mono(str(message.chat.id))}
 {bold('👥 Участники: ' + str(membersCount))}''') # это форматирование просто имба
+        
+        else: # если команда не выполнена в чате
+            await raiseError(message, 'Выполните команду в чате!')
