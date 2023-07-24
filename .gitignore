@@ -3,3 +3,6 @@
 # Media
 *.mp4
 *.mp3
+# Tests files
+config
+/modules
