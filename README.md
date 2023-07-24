@@ -12,3 +12,8 @@
 * **[SimpleAdmin](https://github.com/purpl3-yt/simplemodules/blob/main/SimpleAdmin.py)**
 * **[SimpleLoader](https://github.com/purpl3-yt/simplemodules/blob/main/SimpleLoader.py)**
 * ***[SimpleFramework](https://github.com/purpl3-yt/simplemodules/blob/main/SimpleFramework.py) (not module)***
+
+# How to install?
+
+* **Copy file [install.py](https://github.com/purpl3-yt/simplemodules/blob/main/install.py) from repo, move it to folder with SimpleAI**
+* **Run:** `python3 install.py`, **follow instructions, done!**
