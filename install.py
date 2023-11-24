@@ -69,7 +69,7 @@ for m_key, m_value in zip(modules_to_install.keys(), modules_to_install.values()
             
             else:
                 if not os.path.isfile('modules/' +  m_key + '.py'):
-                    wget.download('https://raw.githubusercontent.com/purpl3-yt/SimpleModules/main/' + m_key + '.py', 'modules/' + m_key + '.py')
+                    wget.download('https://raw.githubusercontent.com/dest4590/SimpleModules/main/' + m_key + '.py', 'modules/' + m_key + '.py')
                     print('\nDownloaded module!')
 
             input('Installed: ' + m_key + ' (press enter to continue) ')
